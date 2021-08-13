@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flask-SocketIO Test</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1>Video Calling Test</h1>
+            <video id="video" width="720" height="560" autoplay muted></video>
+        </div>
+        <!-- <script
+            src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+            integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
+            crossorigin="anonymous"
+        ></script> -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            // const video = document.getElementById("video");
+
+            // navigator.getMedia =
+            //     navigator.getUserMedia ||
+            //     navigator.webkitGetUserMedia ||
+            //     navigator.mozGetUserMedia ||
+            //     navigator.msGetUserMedia;
+
+            // navigator.getMedia(
+            //     {
+            //         video: false,
+            //         audio: true,
+            //     },
+            //     function (stream) {
+            //         console.log("I'm in live function");
+            //         console.log(stream);
+            //         video.srcObject = stream;
+            //         video.play();
+            //     },
+            //     function (error) {
+            //         console.log("Error in live" + error);
+            //         error.code;
+            //     }
+            // );
+
+            // const socket = io("http://localhost:8080/");
+            const socket = io();
+            // const audio = new Audio()
+            // audio.src = 'https://www.youtube.com/watch?v=sQTFXa_tarw'
+            // audio.play()
+            socket.on("connection", function () {
+                console.log("connected");
+            });
+            window.setInterval(function () {
+                // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // const data = canvas.toDataURL("image/jpeg", 1.0);
+                socket.emit("call", new Date().toLocaleTimeString());
+            }, 1000);
+            socket.on("call", function (msg) {
+                console.log(msg);
+            });
+        </script>
+    </body>
+</html>
